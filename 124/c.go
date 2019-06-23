@@ -1,17 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"math"
-	"os"
 )
 
-func main()  {
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	s := scanner.Text()
-	//fmt.Println(s)
+func main() {
+	var s string
+	fmt.Scan(&s)
 	first := '0'
 	firstCount := 0
 	second := '1'
