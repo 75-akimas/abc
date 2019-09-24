@@ -13,3 +13,8 @@ pub fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+fn main() {
+    let n = read::<usize>();
+
+    println!("{}", n.pow(3))
+}

@@ -13,3 +13,9 @@ pub fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
+fn main() {
+    let n = read::<i64>();
+    let m = read::<i64>();
+
+    println!("{}", (1900*m + 100* (n - m))* 2_i64.pow(m as u32))
+}
