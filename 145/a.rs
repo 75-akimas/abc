@@ -14,15 +14,7 @@ pub fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let a = read::<usize>();
-    let b = read::<usize>();
-    let n = read::<usize>();
-
-    if b*b*a < n*2 {
-        let aa:f64 = (2*n) as f64 / (a*a) as f64 - b as f64;
-        println!("{}", (((b as f64 -aa)/a as f64).atan())*180.0/std::f64::consts::PI)
-    } else {
-        let aa:f64 = (2*n) as f64 / (a*b) as f64;
-        println!("{}", ((b as f64/aa).atan())*180.0/std::f64::consts::PI)
-    }
+    let mut a = read::<i64>();
+    println!("{}", a*a)
 }
+

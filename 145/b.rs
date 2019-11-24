@@ -13,16 +13,21 @@ pub fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn main() {
-    let a = read::<usize>();
-    let b = read::<usize>();
-    let n = read::<usize>();
 
-    if b*b*a < n*2 {
-        let aa:f64 = (2*n) as f64 / (a*a) as f64 - b as f64;
-        println!("{}", (((b as f64 -aa)/a as f64).atan())*180.0/std::f64::consts::PI)
-    } else {
-        let aa:f64 = (2*n) as f64 / (a*b) as f64;
-        println!("{}", ((b as f64/aa).atan())*180.0/std::f64::consts::PI)
+fn main() {
+    let n = read::<usize>();
+    let a = read::<String>().chars().collect::<Vec<char>>();
+
+    for i in 0..n/2 {
+        if a[i] != a[i+n/2] {
+            println!("No");
+            return;
+        }
     }
+
+    if n % 2 == 0 {
+        println!("Yes");
+        return;
+    }
+    println!("No");
 }
