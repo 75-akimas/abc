@@ -14,38 +14,44 @@ pub fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let a = read::<i64>();
-    let b = read::<i64>();
-    let m_min = std::cmp::min(a, b);
-    let m_max = std::cmp::max(a, b);
+    let n = read::<usize>();
+    let mut to: Vec<Vec<Edge>> = vec![Vec::new(); n];
 
-    let mut base = m_min - (m_max - m_min);
+    for i in 1..n {
+        let (a, b) = (read::<usize>()-1, read::<usize>()-1);
+        to[a].push(Edge{to: b, id: i-1});
+        to[b].push(Edge{to: a, id: i-1});
+    }
+    let mut m = 0;
+    for i in 1..n {
+        m = std::cmp::max(m, to[i-1].len());
+    }
 
-    if (m_min + m_max) % 3 != 0 {
-        println!("0");
-        return;
+    let mut ans: Vec<usize> = vec![0;n-1];
+    dfs(0, n, n, &mut to, &mut ans);
+    println!("{}", m);
+    for i in 0..ans.len() {
+        println!("{}", ans[i]+1);
     }
-    let hi = (m_max-base) / 2;
-    base = base / 3;
-    let top_n = base+hi;
-    
-    let mut top:i64 = 1;
+}
 
-    println!("{} {} {}",base+top_n, base, top_n);
-    for i in 0..(base+top_n) as usize {
-        top *= (i+1) as i64;
-        top = top;
+#[derive(Clone)]
+struct Edge {
+    to: usize,
+    id: usize
+}
+
+fn dfs(i: usize, p: usize, pc: usize, to: &mut Vec<Vec<Edge>>, ans: &mut Vec<usize>) {
+    let mut col = 0;
+    for u in 0..to[i].len() {
+        if to[i][u].to == p {
+            continue;
+        }
+        if pc == col {
+            col+=1;
+        }
+        ans[to[i][u].id] = col;
+        dfs(to[i][u].to.clone(), i, col, to, ans);
+        col += 1;
     }
-    let mut under1:i64 = 1;
-    for i in 0..top_n as usize {
-        under1 *= (i+1) as i64;
-        under1 = under1;
-    }
-    let mut under2:i64 = 1;
-    for i in 0..base as usize {
-        under2 *= (i+1) as i64;
-        under2 = under2;
-    }
-    println!("{} {} {}", top, under1, under2);
-    println!("{}", (top/(under1*under2)) % (100_000_000_7))
 }
